@@ -1,0 +1,30 @@
+<div class="row">
+	<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+		<%= image_tag @book.book_img.url(:book_show), class: "book_show"%>
+	</div>
+	<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+		<h2>Title:  	<%= @book.title %></h2>
+		<h3>Author: 	<%= @book.author %></h3>
+		<h4>Categorory: <%= @book.category.name %></h4>
+		<p>Description: <%= @book.description %></p>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+		<!-- For review and rating -->
+		<%= render @book.reviews %>
+		<div>
+			<%= link_to "Add review", new_book_review_path(@book) %>
+		</div>
+	</div>
+</div>
+<%= link_to "Back", root_path %>
+<% if user_signed_in? %>
+
+<% if @book.user_id == current_user.id %>
+<%= link_to "Edit", edit_book_path(@book) %>
+<%= link_to "Delete", book_path(@book), method: :delete, data: { confirm: "Ban chac chu?"} %>
+<% end %>
+<% end %>
+
+

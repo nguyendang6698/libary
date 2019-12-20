@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LibraryDemo</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <%= link_to "Library Demo", root_path, class: "navbar-brand" %> 
+        </div>
+    
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav">
+            <li><%= link_to "Sign up", new_user_registration_path %></li>
+            <% if(user_signed_in?) %>
+            <!-- Chỗ này chưa hiểu lắm, phương thức này ở đâu ra nhỉ? -->
+            <li><%= link_to "Sign out", destroy_user_session_path , method: :delete %></li>
+            <% else %>
+            <li><%= link_to "Log in", new_user_session_path %></li>
+            <% end %>
+          </ul>
+          <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Not ready">
+            </div>
+            <button type="submit" class="btn btn-default">Not ready</button>
+          </form>
+          <ul class="nav navbar-nav navbar-right">
+          <li><a href="/admin">Admin</a></li>
+            <% if(user_signed_in?) %>
+            
+            <li><%=link_to "Add book" , new_book_path%></li>
+            <%end%>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Category<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <% Category.all.each do |category| %>
+                  <li class= "<%=if(params[:category] == category.name) then 'active' end%>">
+                    <%= link_to category.name, books_path(category: category.name)%>
+                  </li>
+                <% end %>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div>
+    </nav>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
+    <div class="container">
+      <%= yield %>
+    </div>
+    
+  </body>
+</html>

@@ -1,0 +1,18 @@
+<h1 class="current-category"><%= 'Category: ' if !params[:category].blank? %><%= params[:category]%></h1>
+<% if @book.count == 0 %>
+<h3>Sorry, there is no book here :( </h3>
+<% else %>
+	<div class="row">
+		<% @book.each do |book|%> 
+			<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<a href="/books/<%= book.id %>">
+							<%= image_tag book.book_img.url(:book_index) %> 
+						</a>
+					</div>
+				</div>
+			</div>
+		<% end %>
+	</div>
+<% end %>
